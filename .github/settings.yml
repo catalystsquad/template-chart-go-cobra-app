@@ -43,7 +43,7 @@ labels:
 
   - name: feature
     # If including a `#`, make sure to wrap it with quotes!
-    color: '#336699'
+    color: "#336699"
     description: New functionality.
 # See https://docs.github.com/en/rest/reference/teams#add-or-update-team-repository-permissions for available options
 teams:
