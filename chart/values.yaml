@@ -1,0 +1,69 @@
+replicaCount: 1
+
+image:
+  repository: catalystsquad/template-go-cobra-app
+  pullPolicy: IfNotPresent
+
+imagePullSecretCredentials: ""
+
+healthCheck:
+  enabled: true
+  path: /health
+  port: 6000
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+ingress:
+  enabled: false
+  fqdn: ""
+  tlsSecretName: cert-manager/wildcard-certificate
+  prefix: /
+
+imagePullSecrets:
+  - name: image-pull-secret-credentials
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

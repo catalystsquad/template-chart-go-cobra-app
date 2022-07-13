@@ -1,0 +1,21 @@
+{{- if .Values.ingress.enabled }}
+# NOTE: If your http proxy is on the same virtual host (domain) as an existing http proxy, you'll need to use inclusion
+# to include this http proxy in the one that already exists, and omit the virtualhost from this one. See https://projectcontour.io/docs/v1.20.1/config/inclusion-delegation/
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: {{ include "template-go-cobra-app.fullname" . }}
+spec:
+  {{- if .Values.ingress.fqdn }}
+  virtualhost:
+    fqdn: {{ .Values.ingress.fqdn }}
+    tls:
+      secretName: {{ .Values.ingress.tlsSecretName }}
+  {{- end }}
+  routes:
+    - conditions:
+        - prefix: {{ .Values.ingress.prefix }}
+      services:
+        - name: {{ include "template-go-cobra-app.fullname" . }}
+          port: {{ .Values.service.port}}
+{{- end }}
